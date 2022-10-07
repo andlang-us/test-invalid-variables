@@ -24,7 +24,6 @@ variableGroups:
   visible: true
   variables:
   - vcn_cidr
-  - subnet_dns_label
   - vcn_dns_label
   - test_label
 
