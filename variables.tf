@@ -21,9 +21,12 @@
     variable "subnet_dns_label" {
       default = "subnet"
     }
+
+    variable "test" {
+      default = "test"
+    }
     
     provider "oci" {
       tenancy_ocid     = var.tenancy_ocid
       region           = var.region
     }
-  
