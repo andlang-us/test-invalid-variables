@@ -18,6 +18,11 @@ resource "oci_core_internet_gateway" "this" {
   vcn_id         = oci_core_vcn.this.id
 }
 
+resource "oci_core_internet_gateway" "this_2" {
+  compartment_id = var.compartment_ocid
+  vcn_id         = oci_core_vcn.this.id
+}
+
 resource "oci_core_default_route_table" "this" {
   manage_default_resource_id = oci_core_vcn.this.default_route_table_id
 
