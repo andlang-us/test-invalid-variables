@@ -18,11 +18,6 @@ resource "oci_core_internet_gateway" "this" {
   vcn_id         = oci_core_vcn.this.id
 }
 
-resource "oci_core_internet_gateway" "this_2" {
-  compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.this.id
-}
-
 resource "oci_core_default_route_table" "this" {
   manage_default_resource_id = oci_core_vcn.this.default_route_table_id
 
@@ -42,6 +37,17 @@ resource "oci_core_subnet" "this" {
   cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), count.index)
   display_name        = "Default Subnet ${lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")}"
   dns_label           = "subnet${count.index + 1}"
+  compartment_id      = var.compartment_ocid
+  vcn_id              = oci_core_vcn.this.id
+  security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
+}
+    
+resource "oci_core_subnet" "this_2" {
+  count               = 1
+  availability_domain = lookup(data.oci_identity_availability_domains.this.availability_domains[0], "name")
+  cidr_block          = "10.0.78.0/24"
+  display_name        = "Default Subnet ${lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")}"
+  dns_label           = "subnet${3 + 1}"
   compartment_id      = var.compartment_ocid
   vcn_id              = oci_core_vcn.this.id
   security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
