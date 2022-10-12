@@ -41,15 +41,5 @@ resource "oci_core_subnet" "this" {
   vcn_id              = oci_core_vcn.this.id
   security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
 }
-    
-resource "oci_core_subnet" "this_2" {
-  count               = 1
-  availability_domain = lookup(data.oci_identity_availability_domains.this.availability_domains[0], "name")
-  cidr_block          = "10.0.78.0/24"
-  display_name        = "Default Subnet ${lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")}"
-  dns_label           = "subnet${3 + 1}"
-  compartment_id      = var.compartment_ocid
-  vcn_id              = oci_core_vcn.this.id
-  security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
-}
+  
     
